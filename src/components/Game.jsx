@@ -19,7 +19,8 @@ function Game(){
                 }
                  array.push(character);   
             }
-            setCharacters(array);
+            const shuffledArray = shuffle(array);
+            setCharacters(shuffledArray);
         }catch(err){
             console.error(err);
         }
@@ -29,9 +30,18 @@ function Game(){
        getCharacters();
     },[]);
 
+    function shuffleCharacters(){
+        const shuffledArray = shuffle(characters);
+        setCharacters(shuffledArray);
+    }
+
+    function shuffle(array){
+        return array.sort(() => Math.random() - 0.5);
+    }
+
     return(
         <div>
-
+            
         </div>
     );
 }
