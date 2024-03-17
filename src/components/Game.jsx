@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
+import Card from "./Card";
 
-//https://rickandmortyapi.com/documentation/#get-multiple-characters
-//https://rickandmortyapi.com/api/character/1,2,3,4,5 [1,2,3...]
-function Game(){
+function Game({ incrementScore, endCurrentRound, resetGame }){
 
     const[characters, setCharacters] = useState([]); 
 
@@ -15,10 +14,10 @@ function Game(){
                 let character = {
                     id: data[i].id,
                     name: data[i].name,
-                    imgUrl: data[i].image
+                    imgUrl: data[i].image,
                 }
                  array.push(character);   
-            }
+            }    
             const shuffledArray = shuffle(array);
             setCharacters(shuffledArray);
         }catch(err){
@@ -30,9 +29,10 @@ function Game(){
        getCharacters();
     },[]);
 
-    function shuffleCharacters(){
+    function shuffleCards(){
         const shuffledArray = shuffle(characters);
-        setCharacters(shuffledArray);
+        const copyArray = [...shuffledArray];
+        setCharacters(copyArray);
     }
 
     function shuffle(array){
@@ -41,7 +41,20 @@ function Game(){
 
     return(
         <div>
-            
+            <div className="game">
+                { characters.map((card) => {
+                    return (<Card 
+                        id={card.id} 
+                        key={card.id} name={card.name} 
+                        imgUrl={card.imgUrl} 
+                        incrementScore={incrementScore}
+                        endCurrentRound={endCurrentRound}
+                        resetGame={resetGame}
+                        shuffleCards={shuffleCards}    
+                        />
+                    )
+                })}
+            </div>
         </div>
     );
 }
